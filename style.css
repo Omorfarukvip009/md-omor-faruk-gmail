@@ -1,0 +1,14 @@
+:root{--bg:#0b1220;--card:#0f1720;--accent:#7c3aed}
+body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(135deg,#0f1720 0%,#071022 100%);color:#e6eef8;display:flex;align-items:center;justify-content:center;height:100vh}
+.panel{width:420px;background:rgba(255,255,255,0.03);padding:22px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.6);backdrop-filter: blur(6px)}
+h1{font-size:18px;margin:0 0 12px 0;text-align:center}
+button{background:linear-gradient(90deg,var(--accent),#ec4899);border:none;padding:8px 12px;border-radius:8px;color:white;font-weight:600;cursor:pointer;transition:transform .14s ease,box-shadow .14s}
+button.small{padding:4px 8px;font-size:12px}
+button:active{transform:scale(.99)}
+#mailList{list-style:none;padding:0;margin-top:10px}
+#mailList li{padding:8px;border-radius:8px;background:rgba(255,255,255,0.03);margin-bottom:8px;cursor:pointer}
+#mailList li.copied{background:#16a34a;color:#021;transition:all .2s}
+.generator input{width:calc(100% - 14px);padding:8px;border-radius:8px;border:0;margin-bottom:8px;background:rgba(255,255,255,0.02);color:inherit}
+.generator input[type=number]{width:80px;margin-left:6px}
+#generatedContainer{margin-top:10px}
+.gen-item{display:flex;justify-content:space-between;align-items:center;padding:8px;background:rgba(255,255,255,0.02);border-radius:8px;margin-bottom:8px}
