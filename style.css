@@ -1,14 +1,31 @@
-:root{--bg:#0b1220;--card:#0f1720;--accent:#7c3aed}
-body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(135deg,#0f1720 0%,#071022 100%);color:#e6eef8;display:flex;align-items:center;justify-content:center;height:100vh}
-.panel{width:420px;background:rgba(255,255,255,0.03);padding:22px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.6);backdrop-filter: blur(6px)}
-h1{font-size:18px;margin:0 0 12px 0;text-align:center}
-button{background:linear-gradient(90deg,var(--accent),#ec4899);border:none;padding:8px 12px;border-radius:8px;color:white;font-weight:600;cursor:pointer;transition:transform .14s ease,box-shadow .14s}
-button.small{padding:4px 8px;font-size:12px}
-button:active{transform:scale(.99)}
-#mailList{list-style:none;padding:0;margin-top:10px}
-#mailList li{padding:8px;border-radius:8px;background:rgba(255,255,255,0.03);margin-bottom:8px;cursor:pointer}
-#mailList li.copied{background:#16a34a;color:#021;transition:all .2s}
-.generator input{width:calc(100% - 14px);padding:8px;border-radius:8px;border:0;margin-bottom:8px;background:rgba(255,255,255,0.02);color:inherit}
-.generator input[type=number]{width:80px;margin-left:6px}
-#generatedContainer{margin-top:10px}
-.gen-item{display:flex;justify-content:space-between;align-items:center;padding:8px;background:rgba(255,255,255,0.02);border-radius:8px;margin-bottom:8px}
+body{
+  margin:0; font-family:'Courier New', monospace; overflow:hidden; background:#0b0b1b; color:#fff;
+}
+
+canvas#starCanvas{
+  position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1;
+}
+
+.panel{
+  margin:40px auto; padding:20px; width:420px; border-radius:12px;
+  background:linear-gradient(145deg,#0f0c29,#302b63,#24243e); box-shadow:0 0 20px #ff00ff;
+  border:2px solid #00ffff;
+  transition:all 0.3s ease-in-out;
+}
+
+button{
+  padding:8px 14px; margin:4px; border:none; border-radius:8px;
+  background:linear-gradient(45deg,#ff00ff,#00ffff); color:#fff;
+  cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:active{
+  transform: scale(0.95); box-shadow:0 0 20px #ff00ff inset;
+}
+
+#mailList li, .gen-item{
+  padding:6px; margin:4px; border-radius:6px;
+  background:rgba(0,255,255,0.1); cursor:pointer; transition: all 0.3s ease;
+}
+
+#mailList li.copied{ background:#16a34a; color:#000; }
