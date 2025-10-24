@@ -5,116 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cyberpunk Email Generator</title>
 <style>
-    body {
-        margin:0;
-        padding:0;
-        background:#0f0f0f;
-        font-family:'Courier New', monospace;
-        overflow-x:hidden;
-        color:#0ff;
-    }
-    .container {
-        max-width:800px;
-        margin:50px auto;
-        text-align:center;
-    }
-    h1 {
-        color:#ff00ff;
-        text-shadow: 0 0 5px #ff00ff, 0 0 10px #0ff;
-    }
-    input, button {
-        padding:10px;
-        margin:5px;
-        font-size:16px;
-        border:none;
-        border-radius:5px;
-        outline:none;
-        transition: all 0.2s;
-    }
-    input {
-        background:#111;
-        color:#0ff;
-        box-shadow: 0 0 5px #0ff;
-    }
-    input:focus {
-        box-shadow: 0 0 10px #ff0;
-    }
-    button {
-        background:#0ff;
-        color:#000;
-        cursor:pointer;
-        box-shadow: 0 0 5px #0ff;
-    }
-    button:hover {
-        background:#ff0;
-        color:#000;
-        transform: scale(1.05);
-        box-shadow: 0 0 15px #ff0, 0 0 20px #0ff;
-    }
-    #mainContent {
-        display:none;
-        margin-top:20px;
-    }
-    .email-list {
-        margin-top:20px;
-    }
-    .email-item {
-        padding:5px;
-        cursor:pointer;
-        transition: transform 0.2s, color 0.2s;
-        color:#0ff;
-    }
-    .email-item:hover {
-        color:#ff0;
-        transform: scale(1.05);
-        text-shadow: 0 0 5px #ff0;
-    }
-
-    /* Cyberpunk background animation */
-    body::before {
-        content:'';
-        position:fixed;
-        top:0; left:0;
-        width:100%;
-        height:100%;
-        background: linear-gradient(45deg, #ff00ff, #0ff, #ff0000);
-        opacity:0.05;
-        animation: slide 20s linear infinite;
-        pointer-events:none;
-    }
-    @keyframes slide {
-        0% { background-position:0 0; }
-        100% { background-position:1000px 1000px; }
-    }
-    .click-effect {
-        position:absolute;
-        width:10px;
-        height:10px;
-        border-radius:50%;
-        pointer-events:none;
-        transform:translate(-50%, -50%);
-        animation: pop 0.5s ease-out forwards;
-    }
-    @keyframes pop {
-        0% { opacity:1; transform:translate(-50%, -50%) scale(1); }
-        100% { opacity:0; transform:translate(-50%, -50%) scale(3); }
-    }
+body { margin:0; padding:0; background:#0f0f0f; color:#0ff; font-family:'Courier New', monospace; overflow-x:hidden; }
+.container { max-width:800px; margin:50px auto; text-align:center; }
+h1 { color:#ff00ff; text-shadow:0 0 5px #ff00ff,0 0 10px #0ff; }
+input, button { padding:10px; margin:5px; font-size:16px; border:none; border-radius:5px; outline:none; transition: all 0.2s; }
+input { background:#111; color:#0ff; box-shadow:0 0 5px #0ff; }
+input:focus { box-shadow:0 0 10px #ff0; }
+button { background:#0ff; color:#000; cursor:pointer; box-shadow:0 0 5px #0ff; }
+button:hover { background:#ff0; color:#000; transform: scale(1.05); box-shadow:0 0 15px #ff0,0 0 20px #0ff; }
+#mainContent { display:none; margin-top:20px; }
+.email-list { margin-top:20px; }
+.email-item { padding:5px; cursor:pointer; transition: transform 0.2s, color 0.2s; color:#0ff; }
+.email-item:hover { color:#ff0; transform: scale(1.05); text-shadow:0 0 5px #ff0; }
+body::before { content:''; position:fixed; top:0; left:0; width:100%; height:100%; background:linear-gradient(45deg,#ff00ff,#0ff,#ff0000); opacity:0.05; animation: slide 20s linear infinite; pointer-events:none; }
+@keyframes slide { 0% { background-position:0 0; } 100% { background-position:1000px 1000px; } }
+.click-effect { position:absolute; width:10px; height:10px; border-radius:50%; pointer-events:none; transform:translate(-50%,-50%); animation: pop 0.5s ease-out forwards; }
+@keyframes pop { 0% { opacity:1; transform:translate(-50%, -50%) scale(1); } 100% { opacity:0; transform:translate(-50%, -50%) scale(3); } }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Cyberpunk Email Generator</h1>
-    <input type="password" id="keyInput" placeholder="Enter key">
-    <button id="keyBtn">Enter</button>
+<h1>Cyberpunk Email Generator</h1>
+<input type="password" id="keyInput" placeholder="Enter key">
+<button id="keyBtn">Enter</button>
 
-    <div id="mainContent">
-        <input type="text" id="emailInput" placeholder="Enter email">
-        <input type="number" id="amountInput" placeholder="Amount">
-        <button id="genBtn">Generate Emails</button>
-        <button id="inboxBtn">Show Inbox</button>
-        <div id="emailList" class="email-list"></div>
-    </div>
+<div id="mainContent">
+<input type="text" id="emailInput" placeholder="Enter email">
+<input type="number" id="amountInput" placeholder="Amount">
+<button id="genBtn">Generate Emails</button>
+<button id="inboxBtn">Show Inbox</button>
+<div id="emailList" class="email-list"></div>
+</div>
 </div>
 
 <script>
@@ -125,22 +47,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const inboxBtn = document.getElementById('inboxBtn');
     const emailList = document.getElementById('emailList');
 
-    keyBtn.addEventListener('click', () => {
+    keyBtn.addEventListener('click', (e) => {
         const input = document.getElementById('keyInput').value.trim();
         if(input.toLowerCase() === MASTER_KEY.toLowerCase()) {
             document.getElementById('mainContent').style.display = 'block';
-        } else {
-            alert('Wrong key!');
-        }
-        createClickEffect(event);
+        } else { alert('Wrong key!'); }
+        createClickEffect(e);
     });
 
-    genBtn.addEventListener('click', () => {
+    genBtn.addEventListener('click', (e) => {
         const baseEmail = document.getElementById('emailInput').value.trim();
         const amount = parseInt(document.getElementById('amountInput').value);
         emailList.innerHTML = '';
         if(!baseEmail || !amount) return;
-
         for(let i=0;i<amount;i++){
             const variations=[baseEmail, baseEmail.replace(/([a-z])/g,c=>c.toUpperCase())];
             variations.forEach(email=>{
@@ -151,13 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 emailList.appendChild(div);
             });
         }
-        createClickEffect(event);
+        createClickEffect(e);
     });
 
-    inboxBtn.addEventListener('click', async () => {
+    inboxBtn.addEventListener('click', async (e) => {
         const email = document.getElementById('emailInput').value.trim();
         if(!email) return;
-
         try {
             const res = await fetch('https://backend.atifhasan358.workers.dev/inbox', {
                 headers: {'x-user-email': email}
@@ -171,23 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     div.innerText=s;
                     emailList.appendChild(div);
                 });
-            } else {
-                alert('Failed to fetch inbox. Make sure email is authorized via OAuth.');
-            }
-        } catch(e) {
-            alert('Error fetching inbox: ' + e.message);
-        }
-        createClickEffect(event);
+            } else { alert('Failed to fetch inbox. Make sure email is authorized via OAuth.'); }
+        } catch(err) { alert('Error fetching inbox: '+err.message); }
+        createClickEffect(e);
     });
 
-    // Click effect
     function createClickEffect(e){
-        const el = document.createElement('div');
+        const el=document.createElement('div');
         el.className='click-effect';
-        el.style.left = e.clientX+'px';
-        el.style.top = e.clientY+'px';
+        el.style.left=e.clientX+'px';
+        el.style.top=e.clientY+'px';
         document.body.appendChild(el);
-        setTimeout(()=>document.body.removeChild(el), 500);
+        setTimeout(()=>document.body.removeChild(el),500);
     }
 });
 </script>
