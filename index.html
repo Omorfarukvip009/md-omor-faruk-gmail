@@ -1,45 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cyberpunk Gmail Generator</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Generator + Gmail Inbox</title>
+<style>
+    body { background:#0f0f0f; color:#0ff; font-family:Courier; overflow-x:hidden; }
+    .container { max-width:800px; margin:50px auto; }
+    input, button { padding:10px; margin:5px; font-size:16px; }
+    .email-list { margin-top:20px; }
+    .email-item { padding:5px; cursor:pointer; transition:transform .2s; }
+    .email-item:hover { transform:scale(1.05); color:#ff0; }
+    .button { cursor:pointer; }
+    body::after {
+        content:'';
+        position:fixed;
+        width:100%; height:100%;
+        background:linear-gradient(45deg,#f0f,#0ff,#f00);
+        opacity:0.05;
+        animation:slide 10s linear infinite;
+        pointer-events:none;
+    }
+    @keyframes slide { 0%{background-position:0 0;} 100%{background-position:1000px 1000px;} }
+</style>
 </head>
 <body>
-<canvas id="starCanvas"></canvas>
-<div class="panel">
-<h1>Gmail Key Check & Generator</h1>
-
-<!-- Key input area -->
-<div id="key-area">
-<input id="keyEmail" placeholder="Enter your authenticated Gmail">
-<button id="keySubmit">Submit</button>
-<div id="keyMessage"></div>
-</div>
-
-<!-- Main area (shown after valid key) -->
-<div id="main-area" style="display:none;">
-<div class="user-info">
-Authenticated as: <strong id="userEmail"></strong>
-<button id="logoutBtn">Logout</button>
-</div>
-
-<div class="inbox">
-<button id="loadInbox">Show Inbox</button>
-<ul id="mailList"></ul>
-</div>
-
-<hr>
-<div class="generator">
-<input id="genEmail" placeholder="enter@example.com">
-<input id="genAmount" type="number" min="1" max="10" value="5">
-<button id="generateBtn">Generate</button>
-<div id="generatedContainer"></div>
+<div class="container">
+<h1>Secure Email Generator</h1>
+<input type="password" id="keyInput" placeholder="Enter key">
+<button onclick="checkKey()">Enter</button>
+<div id="mainContent" style="display:none;">
+<input type="text" id="emailInput" placeholder="Enter email (e.g. test@gmail.com)">
+<input type="number" id="amountInput" placeholder="Amount">
+<button onclick="generateEmails()">Generate Emails</button>
+<button onclick="showInbox()">Show Inbox</button>
+<div class="email-list" id="emailList"></div>
 </div>
 </div>
 
-<script src="star-animation.js"></script>
-<script src="script.js"></script>
+<script>
+const MASTER_KEY = 'Faruk';
+function checkKey() {
+    if(document.getElementById('keyInput').value===MASTER_KEY){
+        document.getElementById('mainContent').style.display='block';
+    }else{ alert('Wrong key!'); }
+}
+
+function generateEmails() {
+    const baseEmail = document.getElementById('emailInput').value;
+    const amount = parseInt(document.getElementById('amountInput').value);
+    const listDiv = document.getElementById('emailList');
+    listDiv.innerHTML='';
+    if(!baseEmail || !amount) return;
+
+    for(let i=0;i<amount;i++){
+        const variations=[baseEmail, baseEmail.replace(/([a-z])/g,c=>c.toUpperCase())];
+        variations.forEach(email=>{
+            const div=document.createElement('div');
+            div.className='email-item';
+            div.innerText=email;
+            div.onclick=()=>navigator.clipboard.writeText(email);
+            listDiv.appendChild(div);
+        });
+    }
+}
+
+async function showInbox() {
+    const email=document.getElementById('emailInput').value;
+    if(!email) return;
+    const res=await fetch('https://backend.atifhasan358.workers.dev/inbox',{
+        headers:{'x-user-email':email}
+    });
+    if(res.ok){
+        const subjects=await res.json()
+        const listDiv=document.getElementById('emailList');
+        listDiv.innerHTML='<h3>Last 10 Email Subjects:</h3>';
+        subjects.forEach(s=>{
+            const div=document.createElement('div');
+            div.className='email-item';
+            div.innerText=s;
+            listDiv.appendChild(div);
+        });
+    }else{ alert('Failed to fetch inbox. Make sure email is authorized via OAuth.'); }
+}
+</script>
 </body>
 </html>
