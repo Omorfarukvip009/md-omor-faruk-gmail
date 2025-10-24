@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gmail Inbox + Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="panel">
+    <h1>Gmail Inbox & Email Generator</h1>
+
+    <div id="auth-area">
+      <button id="authBtn">Authenticate with Google</button>
+      <p id="authNote">After authentication the page will redirect back and store your email.</p>
+    </div>
+
+    <div id="main-area" style="display:none;">
+      <div>
+        Authenticated as: <strong id="userEmail"></strong>
+        <button id="logoutBtn" class="small">Logout</button>
+      </div>
+
+      <div class="inbox">
+        <button id="loadInbox">Show Inbox (max 10)</button>
+        <ul id="mailList"></ul>
+      </div>
+
+      <hr/>
+
+      <div class="generator">
+        <h3>Email Generator</h3>
+        <input id="genEmail" placeholder="enter@example.com" />
+        <input id="genAmount" type="number" min="1" max="200" value="5" />
+        <button id="generateBtn">Generate</button>
+
+        <div id="generatedContainer"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
