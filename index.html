@@ -9,19 +9,27 @@
 <body>
 <canvas id="starCanvas"></canvas>
 <div class="panel">
-<h1>Gmail Inbox & Generator</h1>
-<div id="auth-area">
-<button id="authBtn">Authenticate with Gmail</button>
+<h1>Gmail Key Check & Generator</h1>
+
+<!-- Key input area -->
+<div id="key-area">
+<input id="keyEmail" placeholder="Enter your authenticated Gmail">
+<button id="keySubmit">Submit</button>
+<div id="keyMessage"></div>
 </div>
+
+<!-- Main area (shown after valid key) -->
 <div id="main-area" style="display:none;">
 <div class="user-info">
 Authenticated as: <strong id="userEmail"></strong>
 <button id="logoutBtn">Logout</button>
 </div>
+
 <div class="inbox">
 <button id="loadInbox">Show Inbox</button>
 <ul id="mailList"></ul>
 </div>
+
 <hr>
 <div class="generator">
 <input id="genEmail" placeholder="enter@example.com">
@@ -30,6 +38,7 @@ Authenticated as: <strong id="userEmail"></strong>
 <div id="generatedContainer"></div>
 </div>
 </div>
+
 <script src="star-animation.js"></script>
 <script src="script.js"></script>
 </body>
