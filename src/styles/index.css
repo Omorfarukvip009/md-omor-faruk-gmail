@@ -1,14 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9fafb;
-}
-
-button {
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-button:hover {
-  transform: scale(1.05);
+  @apply bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 font-sans;
 }
