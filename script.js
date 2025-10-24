@@ -1,5 +1,5 @@
 // script.js - update WORKER_URL to your worker domain
-const WORKER_URL = "https://your-worker-url.workers.dev"; // <<<<< REPLACE THIS
+const WORKER_URL = "https://backend.atifhasan358.workers.dev"; // <<<<< REPLACE THIS
 
 const authBtn = document.getElementById('authBtn');
 const loadInboxBtn = document.getElementById('loadInbox');
